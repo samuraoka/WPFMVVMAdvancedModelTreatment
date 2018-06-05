@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
 {
@@ -26,6 +27,32 @@ namespace FriendStorage.UI.ViewModel
 
         public ObservableCollection<NavigationItemViewModel> NavigationItems
         { get; private set; }
+
+        //TODO
+    }
+
+    internal class NavigationItemViewModel //TODO
+    {
+        //TODO
+        private string _displayValue;
+
+        //TODO
+
+        public ICommand OpenFriendEditViewCommand { get; set; }
+
+        //TODO
+
+
+        public string DisplayValue
+        {
+            get { return _displayValue; }
+            set
+            {
+                _displayValue = value;
+                //TODO
+            }
+        }
+
 
         //TODO
     }

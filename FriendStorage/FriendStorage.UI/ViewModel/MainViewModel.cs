@@ -21,7 +21,7 @@ namespace FriendStorage.UI.ViewModel
         //TODO
         public ICommand AddFriendCommand { get; set; }
 
-        internal INavigationViewModel NavigationViewModel { get; private set; }
+        public INavigationViewModel NavigationViewModel { get; private set; }
         //TODO
 
     }

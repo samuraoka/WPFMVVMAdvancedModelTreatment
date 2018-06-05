@@ -3,11 +3,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:FriendStorage.UI.View"
+        xmlns:model="clr-namespace:FriendStorage.UI.ViewModel"
         mc:Ignorable="d"
         Title="FriendStorage" FontSize="{DynamicResource DefaultFontSize}"
         MinHeight="650" MinWidth="900" Height="650" Width="900"
         WindowStartupLocation="CenterScreen"
-        Background="Black" Icon="../Image/FriendStorageIcon.png">
+        Background="Black" Icon="../Image/FriendStorageIcon.png"
+        d:DataContext="{d:DesignInstance model:MainViewModel}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -22,10 +25,7 @@
         </Grid.RowDefinitions>
         <!--Header-->
         <TextBlock Margin="10"
-                   Foreground="White" FontSize="40" Grid.ColumnSpan="3">
-            <Run Foreground="Red" Text="Friend" FontWeight="Bold"/>
-            <Run Text="Storage"/>
-        </TextBlock>
+                   Foreground="White" FontSize="40" Grid.ColumnSpan="3"><Run Foreground="Red" Text="Friend" FontWeight="Bold"/><Run Text=" "/><Run Text="Storage"/></TextBlock>
 
         <!--Buttons-->
         <StackPanel Orientation="Horizontal"
@@ -35,7 +35,9 @@
         </StackPanel>
 
         <!--Navigation-->
-        <!--TODO-->
+        <view:NavigationView
+            Grid.Row="2"
+            DataContext="{Binding NavigationViewModel, Mode=OneWay}"/>
 
         <GridSplitter Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1"
                       Grid.RowSpan="2" Background="DarkRed" Width="5"/>
