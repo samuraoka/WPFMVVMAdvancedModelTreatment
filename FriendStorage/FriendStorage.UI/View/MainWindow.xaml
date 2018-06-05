@@ -4,8 +4,48 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="FriendStorage" FontSize="{DynamicResource DefaultFontSize}"
+        MinHeight="650" MinWidth="900" Height="650" Width="900"
+        WindowStartupLocation="CenterScreen"
+        Background="Black" Icon="../Image/FriendStorageIcon.png">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="431*"/>
+            <RowDefinition Height="48*"/>
+        </Grid.RowDefinitions>
+        <!--Header-->
+        <TextBlock Margin="10"
+                   Foreground="White" FontSize="40" Grid.ColumnSpan="3">
+            <Run Foreground="Red" Text="Friend" FontWeight="Bold"/>
+            <Run Text="Storage"/>
+        </TextBlock>
 
+        <!--Buttons-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1" Background="#FF333333">
+            <Button Command="{Binding AddFriendCommand}" ToolTip="Add friend"
+                    Style="{DynamicResource AddButtonStyle}"/>
+        </StackPanel>
+
+        <!--Navigation-->
+        <!--TODO-->
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1"
+                      Grid.RowSpan="2" Background="DarkRed" Width="5"/>
+
+        <!--Tabs-->
+        <!--TODO-->
+
+        <!--Footer-->
+        <TextBlock Margin="10" Grid.Row="3"
+                   Text="Created by Thomas Claudius Huber, 2015"
+                   Grid.ColumnSpan="3" Foreground="LightGray"/>
     </Grid>
 </Window>

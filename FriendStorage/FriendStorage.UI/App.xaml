@@ -1,8 +1,15 @@
 ﻿<Application x:Class="FriendStorage.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="View/MainWindow.xaml">
+             xmlns:system="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultFontSize">18</system:Double>
+            <ResourceDictionary.MergedDictionaries>
+                <!--TODO-->
+                <ResourceDictionary Source="Styles/Button.xaml"/>
+                <!--TODO-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
