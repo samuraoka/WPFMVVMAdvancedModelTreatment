@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using FriendStorage.Model;
+using FriendStorage.UI.DataProvider.Lookups;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -11,10 +13,13 @@ namespace FriendStorage.UI.ViewModel
     internal class NavigationViewModel : INavigationViewModel
     {
         //TODO
+        private readonly ILookupProvider<Friend> _friendLookupProvider;
 
-        public NavigationViewModel() //TODO
+        public NavigationViewModel(
+            ILookupProvider<Friend> friendLookupProvider) //TODO
         {
             //TODO
+            _friendLookupProvider = friendLookupProvider;
             NavigationItems
                 = new ObservableCollection<NavigationItemViewModel>();
         }
@@ -22,7 +27,11 @@ namespace FriendStorage.UI.ViewModel
         public void Load()
         {
             NavigationItems.Clear();
-            //TODO
+            foreach (var item in _friendLookupProvider.GetLookup())
+            {
+                NavigationItems.Add(new NavigationItemViewModel(
+                    item.Id, item.DisplayValue)); //TODO
+            }
         }
 
         public ObservableCollection<NavigationItemViewModel> NavigationItems
@@ -36,12 +45,16 @@ namespace FriendStorage.UI.ViewModel
         //TODO
         private string _displayValue;
 
-        //TODO
+        internal NavigationItemViewModel(int friendId, string displayValue) //TODO
+        {
+            FriendId = friendId;
+            DisplayValue = displayValue;
+            //TODO
+        }
 
         public ICommand OpenFriendEditViewCommand { get; set; }
 
-        //TODO
-
+        public int FriendId { get; private set; }
 
         public string DisplayValue
         {
@@ -52,7 +65,6 @@ namespace FriendStorage.UI.ViewModel
                 //TODO
             }
         }
-
 
         //TODO
     }

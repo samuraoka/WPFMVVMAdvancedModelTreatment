@@ -4,5 +4,6 @@ This is a demo appliction for the [WPF and MVVM: Advanced Model Treatment](https
 * C#
 * Windows Presentation Foundation (WPF)
 * [Autofac](https://autofac.org/) - Autofac is an addictive Inversion of Control container for .NET Core, ASP.NET Core, .NET 4.5.1+, Universal Windows apps, and more. Installed by using NuGet command. Install-Package -Id Autofac -Project FriendStorage.UI
+* [Json.NET](https://www.newtonsoft.com/json) - Popular high-performance JSON framework for .NET 
 * Event aggregator
 * Plain-old CRL object (POCO)
