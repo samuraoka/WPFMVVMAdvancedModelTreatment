@@ -9,5 +9,6 @@ namespace FriendStorage.DataAccess
         //TODO
         IEnumerable<Friend> GetAllFriends();
         //TODO
+        Friend GetFriendById(int id);
     }
 }

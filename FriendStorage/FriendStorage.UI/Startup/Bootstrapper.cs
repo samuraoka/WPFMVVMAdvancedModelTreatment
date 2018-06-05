@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using FriendStorage.DataAccess;
 using FriendStorage.Model;
+using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.DataProvider.Lookups;
 using FriendStorage.UI.ViewModel;
+using Prism.Events;
 
 namespace FriendStorage.UI.Startup
 {
@@ -14,6 +16,8 @@ namespace FriendStorage.UI.Startup
             // https://www.nuget.org/packages/Autofac/
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<EventAggregator>()
+                .As<IEventAggregator>().SingleInstance();
             //TODO
 
             //TODO
@@ -21,6 +25,11 @@ namespace FriendStorage.UI.Startup
             builder.RegisterType<FriendLookupProvider>()
                 .As<ILookupProvider<Friend>>();
             //TODO
+            builder.RegisterType<FriendDataProvider>()
+                .As<IFriendDataProvider>();
+
+            builder.RegisterType<FriendEditViewModel>()
+                .As<IFriendEditViewModel>();
             builder.RegisterType<NavigationViewModel>()
                 .As<INavigationViewModel>();
             builder.RegisterType<MainViewModel>().AsSelf();

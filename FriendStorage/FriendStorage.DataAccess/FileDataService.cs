@@ -3,12 +3,19 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace FriendStorage.DataAccess
 {
     public class FileDataService : IDataService
     {
         private const string StorageFile = "Friends.json";
+
+        public Friend GetFriendById(int friendId)
+        {
+            var friends = ReadFromFile();
+            return friends.Single(f => f.Id == friendId);
+        }
 
         //TODO
 

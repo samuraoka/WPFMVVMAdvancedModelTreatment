@@ -20,8 +20,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="431*"/>
-            <RowDefinition Height="48*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--Header-->
         <TextBlock Margin="10"
@@ -43,7 +43,42 @@
                       Grid.RowSpan="2" Background="DarkRed" Width="5"/>
 
         <!--Tabs-->
-        <!--TODO-->
+        <TabControl ItemsSource="{Binding FriendEditViewModels}"
+                    SelectedItem="{Binding SelectedFriendEditViewModel}"
+                    Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"
+                    Background="Black">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="0,0,20,0">
+                            <Run Text="{Binding Friend.FirstName}"/>
+                            <Run Text="{Binding Friend.LastName}"/>
+                        </TextBlock>
+                        <!--**CHECK** This button executes a method in the MainViewModel-->
+                        <Button Content="X" Command="{Binding RelativeSource=
+                            {RelativeSource FindAncestor, AncestorType={x:Type TabControl}},
+                            Path=DataContext.CloseFriendTabCommand}"
+                                CommandParameter="{Binding Mode=OneWay}"
+                                Width="20" Height="20" FontSize="12"
+                                Foreground="White" Padding="0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <view:FriendEditView/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
 
         <!--Footer-->
         <TextBlock Margin="10" Grid.Row="3"
