@@ -8,7 +8,7 @@ namespace FriendStorage.UI.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(MainViewModel viewModel)
+        internal MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
