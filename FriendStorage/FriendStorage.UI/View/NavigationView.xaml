@@ -19,7 +19,20 @@
                             <ContentPresenter
                                 Margin="{TemplateBinding Margin}"/>
                         </Grid>
-                        <!--TODO-->
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="grid"
+                                        Property="Background"
+                                        Value="#777777"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="grid"
+                                        Property="Background"
+                                        Value="#999999"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
