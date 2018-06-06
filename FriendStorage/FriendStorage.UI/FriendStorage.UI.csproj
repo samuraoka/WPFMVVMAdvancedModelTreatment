@@ -69,6 +69,7 @@
     <Compile Include="Command\DelegateCommand.cs" />
     <Compile Include="DataProvider\FriendDataProvider.cs" />
     <Compile Include="DataProvider\Lookups\FriendGroupLookupProvider.cs" />
+    <Compile Include="Events\FriendSavedEvent.cs" />
     <Compile Include="ViewModel\FriendEditViewModel.cs" />
     <Compile Include="Events\OpenFriendEditViewEvent.cs" />
     <Compile Include="DataProvider\IFriendDataProvider.cs" />

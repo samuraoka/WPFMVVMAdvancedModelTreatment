@@ -5,6 +5,7 @@ using FriendStorage.UI.Events;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -23,6 +24,8 @@ namespace FriendStorage.UI.ViewModel
             ILookupProvider<Friend> friendLookupProvider) //TODO
         {
             _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<FriendSavedEvent>()
+                .Subscribe(OnFriendSaved);
             //TODO
             _friendLookupProvider = friendLookupProvider;
             NavigationItems
@@ -35,7 +38,7 @@ namespace FriendStorage.UI.ViewModel
             foreach (var item in _friendLookupProvider.GetLookup())
             {
                 NavigationItems.Add(new NavigationItemViewModel(
-                    item.Id, item.DisplayValue, _eventAggregator)); //TODO
+                    item.Id, item.DisplayValue, _eventAggregator));
             }
         }
 
@@ -43,9 +46,24 @@ namespace FriendStorage.UI.ViewModel
         { get; private set; }
 
         //TODO
+
+        private void OnFriendSaved(Friend savedFriend)
+        {
+            var item = NavigationItems
+                .SingleOrDefault(i => i.FriendId == savedFriend.Id);
+            if (item != null)
+            {
+                item.DisplayValue = string.Format(
+                    $"{savedFriend.FirstName} {savedFriend.LastName}");
+            }
+            else
+            {
+                Load();
+            }
+        }
     }
 
-    internal class NavigationItemViewModel //TODO
+    internal class NavigationItemViewModel : Observable
     {
         // Prism.Core
         // https://www.nuget.org/packages/Prism.Core/7.1.0.135-pre
@@ -73,7 +91,7 @@ namespace FriendStorage.UI.ViewModel
             set
             {
                 _displayValue = value;
-                //TODO
+                OnPropertyChanged();
             }
         }
 

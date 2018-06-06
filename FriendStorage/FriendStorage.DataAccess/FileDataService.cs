@@ -17,7 +17,45 @@ namespace FriendStorage.DataAccess
             return friends.Single(f => f.Id == friendId);
         }
 
-        //TODO
+        public void SaveFriend(Friend friend)
+        {
+            if (friend.Id <= 0)
+            {
+                InsertFriend(friend);
+            }
+            else
+            {
+                UpdateFriend(friend);
+            }
+        }
+
+        public void DeleteFriend(int friendId)
+        {
+            var friends = ReadFromFile();
+            var existing = friends.Single(f => f.Id == friendId);
+            friends.Remove(existing);
+            SaveToFile(friends);
+        }
+
+        private void UpdateFriend(Friend friend)
+        {
+            var friends = ReadFromFile();
+            var existing = friends.Single(f => f.Id == friend.Id);
+            var indexOfExisting = friends.IndexOf(existing);
+            friends.Insert(indexOfExisting, friend);
+            friends.Remove(existing);
+            SaveToFile(friends);
+        }
+
+        private void InsertFriend(Friend friend)
+        {
+            var friends = ReadFromFile();
+            var maxFriendId = friends.Max(f => f.Id);
+            friend.Id = maxFriendId + 1;
+            friends.Add(friend);
+            SaveToFile(friends);
+        }
+
         public IEnumerable<FriendGroup> GetAllFriendGroups()
         {
             // Just yielding back four hard-coded groups
@@ -40,7 +78,12 @@ namespace FriendStorage.DataAccess
             // FriendDataProvider -class
         }
 
-        //TODO
+        private void SaveToFile(List<Friend> friendList)
+        {
+            string json = JsonConvert.SerializeObject(
+                friendList, Formatting.Indented);
+            File.WriteAllText(StorageFile, json);
+        }
 
         private List<Friend> ReadFromFile()
         {

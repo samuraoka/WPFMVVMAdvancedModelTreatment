@@ -7,5 +7,6 @@ namespace FriendStorage.UI.DataProvider
         Friend GetFriendById(int id);
 
         //TODO
+        void SaveFriend(Friend friend);
     }
 }

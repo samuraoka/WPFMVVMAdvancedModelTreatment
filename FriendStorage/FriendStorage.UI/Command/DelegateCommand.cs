@@ -8,15 +8,10 @@ namespace FriendStorage.UI.Command
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
 
-        public DelegateCommand(
+        internal DelegateCommand(
             Action<object> execute, Func<object, bool> canExecute = null)
         {
-            if (execute == null)
-            {
-                throw new ArgumentNullException("execute");
-            }
-
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException("execute");
             _canExecute = canExecute;
         }
 
@@ -32,6 +27,9 @@ namespace FriendStorage.UI.Command
             _execute(parameter);
         }
 
-        //TODO
+        internal void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

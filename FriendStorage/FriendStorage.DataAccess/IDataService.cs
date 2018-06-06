@@ -7,7 +7,8 @@ namespace FriendStorage.DataAccess
     public interface IDataService : IDisposable
     {
         Friend GetFriendById(int friendId);
-        //TODO
+        void SaveFriend(Friend friend);
+        void DeleteFriend(int friendId);
         IEnumerable<Friend> GetAllFriends();
         IEnumerable<FriendGroup> GetAllFriendGroups();
     }

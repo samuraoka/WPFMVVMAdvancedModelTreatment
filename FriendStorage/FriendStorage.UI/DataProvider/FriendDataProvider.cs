@@ -13,7 +13,6 @@ namespace FriendStorage.UI.DataProvider
             _dataServiceCreator = dataServiceCreator;
         }
 
-        //TODO
         public Friend GetFriendById(int id)
         {
             using (var dataService = _dataServiceCreator())
@@ -21,6 +20,15 @@ namespace FriendStorage.UI.DataProvider
                 return dataService.GetFriendById(id);
             }
         }
+
+        public void SaveFriend(Friend friend)
+        {
+            using (var dataService = _dataServiceCreator())
+            {
+                dataService.SaveFriend(friend);
+            }
+        }
+
         //TODO
     }
 }

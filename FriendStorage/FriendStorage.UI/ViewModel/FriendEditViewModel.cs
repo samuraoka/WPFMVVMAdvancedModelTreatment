@@ -3,6 +3,8 @@ using FriendStorage.Model;
 using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.DataProvider.Lookups;
+using FriendStorage.UI.Events;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,6 +20,7 @@ namespace FriendStorage.UI.ViewModel
 
     internal class FriendEditViewModel : Observable, IFriendEditViewModel
     {
+        private readonly IEventAggregator _eventAggregator;
         //TODO
         private readonly IFriendDataProvider _friendDataProvider;
 
@@ -28,12 +31,16 @@ namespace FriendStorage.UI.ViewModel
         private IEnumerable<LookupItem> _friendGroups;
         private FriendEmail _selectedEmail;
 
-        public FriendEditViewModel(IFriendDataProvider friendDataProvider,
+        public FriendEditViewModel(IEventAggregator eventAggregator,
+            IFriendDataProvider friendDataProvider,
             ILookupProvider<FriendGroup> friendGroupLookupProvider) //TODO
         {
+            _eventAggregator = eventAggregator;
             //TODO
             _friendDataProvider = friendDataProvider;
             _friendGroupLookupProvider = friendGroupLookupProvider;
+
+            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             //TODO
             AddEmailCommand = new DelegateCommand(OnAddEmailExecute);
             //TODO
@@ -95,6 +102,19 @@ namespace FriendStorage.UI.ViewModel
 
         public ICommand RemoveEmailCommand { get; private set; }
 
+        private void OnSaveExecute(object obj)
+        {
+            _friendDataProvider.SaveFriend(Friend);
+            _eventAggregator.GetEvent<FriendSavedEvent>().Publish(Friend);
+            InvalidateCommands();
+        }
+
+        private bool OnSaveCanExecute(object arg)
+        {
+            //TODO: Check for HasChanges
+            return true;
+        }
+
         //TODO
 
         private void OnAddEmailExecute(object obj)
@@ -105,6 +125,7 @@ namespace FriendStorage.UI.ViewModel
 
         private void InvalidateCommands()
         {
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
             //TODO
             Debug.WriteLine("[{0}] InvalidateCommands: Implemente This method"
                 , DateTime.Now);
