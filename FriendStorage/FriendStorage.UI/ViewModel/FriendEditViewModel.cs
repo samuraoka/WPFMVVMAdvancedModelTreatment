@@ -1,5 +1,4 @@
-﻿using FriendStorage.DataAccess;
-using FriendStorage.Model;
+﻿using FriendStorage.Model;
 using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.DataProvider.Lookups;
@@ -7,7 +6,6 @@ using FriendStorage.UI.Events;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace FriendStorage.UI.ViewModel
@@ -40,8 +38,13 @@ namespace FriendStorage.UI.ViewModel
             _friendDataProvider = friendDataProvider;
             _friendGroupLookupProvider = friendGroupLookupProvider;
 
-            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
-            //TODO
+            SaveCommand
+                = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            ResetCommand
+                = new DelegateCommand(OnResetExecute, OnResetCanExecute);
+            DeleteCommand
+                = new DelegateCommand(OnDeleteExecute, OnDeleteCanExecute);
+
             AddEmailCommand = new DelegateCommand(OnAddEmailExecute);
             //TODO
         }
@@ -115,6 +118,29 @@ namespace FriendStorage.UI.ViewModel
             return true;
         }
 
+        private void OnResetExecute(object obj)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
+
+        private bool OnResetCanExecute(object arg)
+        {
+            //TODO: Check for HasChanges
+            return false;
+        }
+
+        private bool OnDeleteCanExecute(object arg)
+        {
+            return Friend != null && Friend.Id > 0;
+        }
+
+        private void OnDeleteExecute(object obj)
+        {
+            //TODO
+            throw new NotImplementedException();
+        }
+
         //TODO
 
         private void OnAddEmailExecute(object obj)
@@ -126,9 +152,8 @@ namespace FriendStorage.UI.ViewModel
         private void InvalidateCommands()
         {
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-            //TODO
-            Debug.WriteLine("[{0}] InvalidateCommands: Implemente This method"
-                , DateTime.Now);
+            ((DelegateCommand)ResetCommand).RaiseCanExecuteChanged();
+            ((DelegateCommand)DeleteCommand).RaiseCanExecuteChanged();
         }
     }
 }

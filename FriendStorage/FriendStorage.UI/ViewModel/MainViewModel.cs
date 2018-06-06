@@ -33,7 +33,8 @@ namespace FriendStorage.UI.ViewModel
                 = new ObservableCollection<IFriendEditViewModel>();
             CloseFriendTabCommand
                 = new DelegateCommand(OnCloseFriendTabExecute);
-            //TODO
+            AddFriendCommand
+                = new DelegateCommand(OnAddFriendExecute);
         }
 
         internal void Load()
@@ -45,7 +46,8 @@ namespace FriendStorage.UI.ViewModel
 
         public ICommand AddFriendCommand { get; set; }
 
-        public INavigationViewModel NavigationViewModel { get; private set; }
+        public INavigationViewModel NavigationViewModel
+        { get; private set; }
 
         // Those ViewModes represent the Tab-Pages in the UI
         public ObservableCollection<IFriendEditViewModel> FriendEditViewModels
@@ -61,7 +63,13 @@ namespace FriendStorage.UI.ViewModel
             }
         }
 
-        //TODO
+        private void OnAddFriendExecute(object obj)
+        {
+            IFriendEditViewModel viewModel = _friendEditViewModelCreator();
+            FriendEditViewModels.Add(viewModel);
+            viewModel.Load();
+            SelectedFriendEditViewModel = viewModel;
+        }
 
         private void OnOpenFriendTab(int friendId)
         {
