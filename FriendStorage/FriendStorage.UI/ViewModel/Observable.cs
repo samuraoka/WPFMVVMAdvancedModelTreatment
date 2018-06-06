@@ -1,19 +1,17 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace FriendStorage.UI.ViewModel
 {
-    //TODO
-    internal class Observable //TODO
+    internal class Observable : INotifyPropertyChanged
     {
-        //TODO
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName = null) //TODO
+        protected virtual void OnPropertyChanged(
+            [CallerMemberName]string propertyName = null)
         {
-            //TODO
-            Debug.WriteLine("[{0}] OnPropertyChangedEvent: PropertyName: {1}: Implement this method"
-                , DateTime.Now
-                , propertyName);
+            PropertyChanged?.Invoke(
+                this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
