@@ -18,6 +18,14 @@ namespace FriendStorage.DataAccess
         }
 
         //TODO
+        public IEnumerable<FriendGroup> GetAllFriendGroups()
+        {
+            // Just yielding back four hard-coded groups
+            yield return new FriendGroup { Id = 1, Name = "Family" };
+            yield return new FriendGroup { Id = 2, Name = "Friends" };
+            yield return new FriendGroup { Id = 3, Name = "Colleague" };
+            yield return new FriendGroup { Id = 4, Name = "Other" };
+        }
 
         public IEnumerable<Friend> GetAllFriends()
         {

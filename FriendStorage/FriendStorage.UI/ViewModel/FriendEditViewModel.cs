@@ -1,4 +1,5 @@
-﻿using FriendStorage.Model;
+﻿using FriendStorage.DataAccess;
+using FriendStorage.Model;
 using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.DataProvider.Lookups;
@@ -19,15 +20,20 @@ namespace FriendStorage.UI.ViewModel
     {
         //TODO
         private readonly IFriendDataProvider _friendDataProvider;
+
         //TODO
+        private readonly ILookupProvider<FriendGroup>
+            _friendGroupLookupProvider;
         private Friend _friend;
         private IEnumerable<LookupItem> _friendGroups;
         private FriendEmail _selectedEmail;
 
-        public FriendEditViewModel(IFriendDataProvider friendDataProvider) //TODO
+        public FriendEditViewModel(IFriendDataProvider friendDataProvider,
+            ILookupProvider<FriendGroup> friendGroupLookupProvider) //TODO
         {
             //TODO
             _friendDataProvider = friendDataProvider;
+            _friendGroupLookupProvider = friendGroupLookupProvider;
             //TODO
             AddEmailCommand = new DelegateCommand(OnAddEmailExecute);
             //TODO
@@ -35,7 +41,7 @@ namespace FriendStorage.UI.ViewModel
 
         public void Load(int? friendId = null)
         {
-            //TODO
+            FriendGroupLookup = _friendGroupLookupProvider.GetLookup();
 
             Friend = friendId.HasValue
                 ? _friendDataProvider.GetFriendById(friendId.Value)

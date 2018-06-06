@@ -24,7 +24,8 @@ namespace FriendStorage.UI.Startup
             builder.RegisterType<FileDataService>().As<IDataService>();
             builder.RegisterType<FriendLookupProvider>()
                 .As<ILookupProvider<Friend>>();
-            //TODO
+            builder.RegisterType<FriendGroupLookupProvider>()
+                .As<ILookupProvider<FriendGroup>>();
             builder.RegisterType<FriendDataProvider>()
                 .As<IFriendDataProvider>();
 
