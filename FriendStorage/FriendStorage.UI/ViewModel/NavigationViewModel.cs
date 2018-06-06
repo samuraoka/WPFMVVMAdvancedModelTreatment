@@ -3,7 +3,6 @@ using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider.Lookups;
 using FriendStorage.UI.Events;
 using Prism.Events;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -26,7 +25,8 @@ namespace FriendStorage.UI.ViewModel
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<FriendSavedEvent>()
                 .Subscribe(OnFriendSaved);
-            //TODO
+            _eventAggregator.GetEvent<FriendDeletedEvent>()
+                .Subscribe(OnFriendDeleted);
             _friendLookupProvider = friendLookupProvider;
             NavigationItems
                 = new ObservableCollection<NavigationItemViewModel>();
@@ -45,7 +45,15 @@ namespace FriendStorage.UI.ViewModel
         public ObservableCollection<NavigationItemViewModel> NavigationItems
         { get; private set; }
 
-        //TODO
+        private void OnFriendDeleted(int friendId)
+        {
+            var item = NavigationItems
+                .SingleOrDefault(i => i.FriendId == friendId);
+            if (item != null)
+            {
+                NavigationItems.Remove(item);
+            }
+        }
 
         private void OnFriendSaved(Friend savedFriend)
         {

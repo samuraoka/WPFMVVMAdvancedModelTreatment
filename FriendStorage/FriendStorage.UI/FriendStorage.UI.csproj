@@ -70,9 +70,16 @@
     <Compile Include="DataProvider\FriendDataProvider.cs" />
     <Compile Include="DataProvider\Lookups\FriendGroupLookupProvider.cs" />
     <Compile Include="Events\FriendSavedEvent.cs" />
+    <Compile Include="Events\FriendDeletedEvent.cs" />
+    <Compile Include="View\Services\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Services\MessageDialogResult.cs" />
+    <Compile Include="View\Services\MessageDialogService.cs" />
     <Compile Include="ViewModel\FriendEditViewModel.cs" />
     <Compile Include="Events\OpenFriendEditViewEvent.cs" />
     <Compile Include="DataProvider\IFriendDataProvider.cs" />
+    <Compile Include="View\Services\IMessageDialogService.cs" />
     <Compile Include="ViewModel\Observable.cs" />
     <Compile Include="View\FriendEditView.xaml.cs">
       <DependentUpon>FriendEditView.xaml</DependentUpon>
@@ -136,6 +143,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\NavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Services\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

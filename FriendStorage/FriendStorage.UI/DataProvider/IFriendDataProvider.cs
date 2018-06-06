@@ -5,8 +5,7 @@ namespace FriendStorage.UI.DataProvider
     internal interface IFriendDataProvider
     {
         Friend GetFriendById(int id);
-
-        //TODO
         void SaveFriend(Friend friend);
+        void DeleteFriend(int id);
     }
 }

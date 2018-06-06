@@ -11,11 +11,9 @@ namespace FriendStorage.UI.ViewModel
     internal class MainViewModel : Observable
     {
         private readonly IEventAggregator _eventAggregator;
+        //TODO
         private IFriendEditViewModel _selectedFriendEditViewModel;
-        //TODO
         private Func<IFriendEditViewModel> _friendEditViewModelCreator;
-        //TODO
-        //TODO
 
         public MainViewModel(IEventAggregator eventAggregator,
             INavigationViewModel navigationViewModel,
@@ -25,10 +23,11 @@ namespace FriendStorage.UI.ViewModel
             //TODO
             _eventAggregator.GetEvent<OpenFriendEditViewEvent>()
                 .Subscribe(OnOpenFriendTab);
-            //TODO
+            _eventAggregator.GetEvent<FriendDeletedEvent>()
+                .Subscribe(OnFriendDeleted);
+
             NavigationViewModel = navigationViewModel;
             _friendEditViewModelCreator = friendEditViewCreator;
-            //TODO
             FriendEditViewModels
                 = new ObservableCollection<IFriendEditViewModel>();
             CloseFriendTabCommand
@@ -94,6 +93,14 @@ namespace FriendStorage.UI.ViewModel
             }
         }
 
-        //TODO
+        private void OnFriendDeleted(int friendId)
+        {
+            var viewModel = FriendEditViewModels
+                .SingleOrDefault(f => f.Friend.Id == friendId);
+            if (viewModel != null)
+            {
+                FriendEditViewModels.Remove(viewModel);
+            }
+        }
     }
 }

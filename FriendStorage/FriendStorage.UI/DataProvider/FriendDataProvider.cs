@@ -29,6 +29,12 @@ namespace FriendStorage.UI.DataProvider
             }
         }
 
-        //TODO
+        public void DeleteFriend(int id)
+        {
+            using (var dataService = _dataServiceCreator())
+            {
+                dataService.DeleteFriend(id);
+            }
+        }
     }
 }

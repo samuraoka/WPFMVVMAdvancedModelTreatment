@@ -3,6 +3,7 @@ using FriendStorage.UI.Command;
 using FriendStorage.UI.DataProvider;
 using FriendStorage.UI.DataProvider.Lookups;
 using FriendStorage.UI.Events;
+using FriendStorage.UI.View.Services;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,8 @@ namespace FriendStorage.UI.ViewModel
     internal class FriendEditViewModel : Observable, IFriendEditViewModel
     {
         private readonly IEventAggregator _eventAggregator;
-        //TODO
+        private readonly IMessageDialogService _messageDialogService;
         private readonly IFriendDataProvider _friendDataProvider;
-
-        //TODO
         private readonly ILookupProvider<FriendGroup>
             _friendGroupLookupProvider;
         private Friend _friend;
@@ -30,11 +29,12 @@ namespace FriendStorage.UI.ViewModel
         private FriendEmail _selectedEmail;
 
         public FriendEditViewModel(IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService,
             IFriendDataProvider friendDataProvider,
-            ILookupProvider<FriendGroup> friendGroupLookupProvider) //TODO
+            ILookupProvider<FriendGroup> friendGroupLookupProvider)
         {
             _eventAggregator = eventAggregator;
-            //TODO
+            _messageDialogService = messageDialogService;
             _friendDataProvider = friendDataProvider;
             _friendGroupLookupProvider = friendGroupLookupProvider;
 
@@ -46,7 +46,8 @@ namespace FriendStorage.UI.ViewModel
                 = new DelegateCommand(OnDeleteExecute, OnDeleteCanExecute);
 
             AddEmailCommand = new DelegateCommand(OnAddEmailExecute);
-            //TODO
+            RemoveEmailCommand = new DelegateCommand(
+                OnRemoveEmailExecute, OnRemoveEmailCanExecute);
         }
 
         public void Load(int? friendId = null)
@@ -91,7 +92,7 @@ namespace FriendStorage.UI.ViewModel
             {
                 _selectedEmail = value;
                 OnPropertyChanged();
-                //TODO
+                ((DelegateCommand)RemoveEmailCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -137,16 +138,38 @@ namespace FriendStorage.UI.ViewModel
 
         private void OnDeleteExecute(object obj)
         {
-            //TODO
-            throw new NotImplementedException();
+            var result = _messageDialogService.ShowYesNoDialog(
+                "Delete Friend",
+                string.Format(
+                    "Do you really want to delete the friend '{0} {1}'",
+                    Friend.FirstName, Friend.LastName),
+                MessageDialogResult.No);
+
+            if (result == MessageDialogResult.Yes)
+            {
+                _friendDataProvider.DeleteFriend(Friend.Id);
+                _eventAggregator.GetEvent<FriendDeletedEvent>()
+                    .Publish(Friend.Id);
+            }
         }
 
-        //TODO
+        private void OnRemoveEmailExecute(object obj)
+        {
+            //TODO need to notify model change for UI
+            Friend.Emails.Remove(SelectedEmail);
+            ((DelegateCommand)RemoveEmailCommand).RaiseCanExecuteChanged();
+        }
+
+        private bool OnRemoveEmailCanExecute(object arg)
+        {
+            //TODO need to notify model change for UI
+            return SelectedEmail != null;
+        }
 
         private void OnAddEmailExecute(object obj)
         {
-            //TODO
-            throw new NotImplementedException();
+            //TODO need to notify model change for UI
+            Friend.Emails.Add(new FriendEmail());
         }
 
         private void InvalidateCommands()

@@ -7,7 +7,6 @@ namespace FriendStorage.UI.View
     /// </summary>
     public partial class NavigationView : UserControl
     {
-        //TODO
         public NavigationView()
         {
             InitializeComponent();
