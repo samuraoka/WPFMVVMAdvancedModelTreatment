@@ -3,10 +3,91 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" 
+             xmlns:model="clr-namespace:FriendStorage.UI.ViewModel"
+             d:DataContext="{d:DesignInstance model:FriendEditViewModel}"             
+             mc:Ignorable="d"
              d:DesignHeight="350" d:DesignWidth="700" Background="#333333">
     <Grid>
-        <!--TODO-->
-        <TextBlock Text="FriendStorage.UI.View.FriendEditView"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Firstname" Margin="5"/>
+        <TextBox Grid.Column="1"
+                 Text="{Binding Friend.FirstName,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="1" Content="Lastname" Margin="5"/>
+        <TextBox Grid.Column="1" Grid.Row="1"
+                 Text="{Binding Friend.LastName,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="2" Content="Birthday" Margin="5"/>
+        <DatePicker Grid.Column="1" Grid.Row="2"
+                    SelectedDate="{Binding Friend.Birthday,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="3" Content="Is Developer" Margin="5 0"/>
+        <CheckBox Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"
+                  IsChecked="{Binding Friend.IsDeveloper,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Grid.Row="4" Content="Friendgroup" Margin="5"/>
+        <ComboBox Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"
+                  ItemsSource="{Binding FriendGroupLookup}"
+                  DisplayMemberPath="DisplayValue"
+                  SelectedValuePath="Id"
+                  SelectedValue="{Binding Friend.FriendGroupId,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Content="City" Grid.Column="3" Margin="5"/>
+        <TextBox Grid.Column="4"
+                 Text="{Binding Friend.Address.City,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Content="Street" Grid.Column="3" Margin="5" Grid.Row="1"/>
+        <TextBox Grid.Column="4" Grid.Row="1"
+                 Text="{Binding Friend.Address.Street,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label Content="Street Number" Grid.Column="3" Margin="5" Grid.Row="2"/>
+        <TextBox Grid.Column="4" Grid.Row="2"
+                 Text="{Binding Friend.Address.StreetNumber,UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Grid.Row="5">
+            <Label Content="Emails" Margin="5"/>
+            <Button Command="{Binding AddEmailCommand, Mode=OneWay}"
+                    Style="{DynamicResource AddButtonStyle}"
+                    HorizontalAlignment="Right"/>
+            <Button Command="{Binding RemoveEmailCommand, Mode=OneWay}"
+                    Style="{DynamicResource RemoveButtonStyle}"
+                    HorizontalAlignment="Right"/>
+        </StackPanel>
+        <DataGrid Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Margin="0,5"
+                  ItemsSource="{Binding Friend.Emails}"
+                  SelectedItem="{Binding SelectedEmail}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Email" Width="300"
+                                    Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Comment" Width="200"
+                                    Binding="{Binding Comment}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="6" Orientation="Horizontal"
+                    HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="Save" Margin="5"
+                    Command="{Binding SaveCommand, Mode=OneWay}"/>
+            <Button Content="Reset" Margin="5"
+                    Command="{Binding ResetCommand, Mode=OneWay}"/>
+            <Button Content="Delete" Margin="5"
+                    Command="{Binding DeleteCommand, Mode=OneWay}"/>
+        </StackPanel>
     </Grid>
 </UserControl>
